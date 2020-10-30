@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-void token(char str[], char delimitador[], int data[]);
-void ranking(int scores[], int tam, int dato);
+#define _DIGITS 10 
+void split_to_int(char src[], char delimiter[], int target[]);
+void ranking(int src[], int tam, int src2);
 void sort_array(int array[], int tam);
-void copy_and_add(int taget[], int src[], int tam, int dato);
-void printArray(int arr[], int tam);
+void copy_and_add(int src[], int taget[], int tam, int src2);
 
 
 int main(int argc, char *argv[]){
@@ -18,27 +17,24 @@ int main(int argc, char *argv[]){
 			
 			int scores[n];
 			int scoresAux[n+1];
-			char *str = malloc(4*n*sizeof(char));
+			char *str = malloc(_DIGITS*n*sizeof(char));
 			
-			fgets(str, 4*n, stdin); 
+			fgets(str, _DIGITS*n, stdin); 
 			
-			token(str, " ", scores);
+			split_to_int(str, " ", scores);
 			free(str);
 			scanf("%d\n", &m);
 			int alice[m];
-			str=malloc(4*m*sizeof(char));
-			fgets(str, 4*m, stdin);
-			token(str, " ", alice);
+			str=malloc(_DIGITS*m*sizeof(char));
+			fgets(str, _DIGITS*m, stdin);
+			split_to_int(str, " ", alice);
 			free(str);
 			
-			ranking(scores, n, 0);
-			
 			for(int i=0;i<m; i++){
-				copy_and_add(scoresAux, scores, n+1, alice[i]);
+				copy_and_add(scores, scoresAux, n+1, alice[i]);
 				sort_array(scoresAux, n+1);
 				ranking(scoresAux, n+2, alice[i]);
 			}
-			
 			
 		}else{
 			printf("Algo salio mal\n");
@@ -49,63 +45,53 @@ int main(int argc, char *argv[]){
 return 0;
 }
 
-void token(char str[], char delimitador[], int data[]){
-	char *token = strtok(str, delimitador);
+void split_to_int(char src[], char delimiter[], int target[]){
+	char *token = strtok(src, delimiter);
 			if(token != NULL){
 				int i =0;
 			while(token != NULL){
-	
-				data[i] = atoi(token);
-
+				target[i] = atoi(token);
 				i++;
-				token = strtok(NULL, delimitador);
+				token = strtok(NULL, delimiter);
 			}
 		}
 }	
 
-
-void ranking(int score[], int tam, int dato){
-	int ranking[tam];
-	int i, ran=1;
+void ranking(int src[], int tam, int src2){
+	int ranking[tam], rank=1;
 	char state = 0;
-	ranking[0]=ran;
-	for(i=1; i<tam; i++){
-		if(score[i-1] == score[i]){
-				ranking[i]=ran;
+	ranking[0]=rank;
+	for(int i=1; i<tam; i++){
+		if(src[i-1] == src[i]){
+				ranking[i]=rank;
 		}else{
-			ran++;
-			ranking[i]= ran;
+			rank++;
+			ranking[i]= rank;
 		}
-		if(dato==score[i-1] && state == 0){
+		if(src2==src[i-1] && state == 0){
 			state=1;
 			printf("%d\n", ranking[i-1]);
 		}
 	}
 }
 
-void sort_array(int array[], int tam){
-	int temporal;
+void sort_array(int src[], int tam){
+	int temp;
 	for (int i = 0;i < tam; i++){
 		for (int j = 0; j< tam-1; j++){
-			if (array[j] < array[j+1]){
-			temporal = array[j]; 
-			array[j] = array[j+1]; 
-			array[j+1] = temporal;
+			if (src[j] < src[j+1]){
+			temp = src[j]; 
+			src[j] = src[j+1]; 
+			src[j+1] = temp;
 			}
 		}
 	}
 }
-void copy_and_add(int target[], int src[], int tam, int dato){
+void copy_and_add(int src[],int target[], int tam, int src2){
 	int i;
 	for(i=0; i<tam-1; i++){
 		target[i]= src[i];
 	}
-	target[i]=dato;
+	target[i]=src2;
 		
-}
-
-void printArray(int arr[], int tam){
-	for(int i=0; i<tam; i++){
-		printf("score: %d\n", arr[i]);
-	}
 }

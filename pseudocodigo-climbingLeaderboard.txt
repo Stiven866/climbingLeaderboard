@@ -1,0 +1,73 @@
+Algoritmo climbingLeaderboard
+	Leer n;
+	Leer string;
+	Dimension scores[n];
+	split_to_int(string, " ", scores);
+	Leer m;
+	Leer string;
+	Dimension alice[m];
+	split_to_int(string, " ", alice);
+	
+	
+	Dimension scoresAux[n+1];
+	Para i<-0 Hasta m Con Paso 
+		copy_and_add(scores, scoresAux, n+1, alice[i]);
+		sort_array(scoresAuX, n+1);
+		ranking(scoresAux, n+2, alice[i]);
+	FinPara
+	
+	
+FinAlgoritmo
+
+//target se pasa por referecnia.
+Funcion split_to_int(char src[], char delimiter[], int target[])
+	src <- src.split(delimiter);
+	Para i<-0 Hasta Longitud(src)-1
+		target[i]<-int(src[i]);
+	FinPara
+FinFuncion
+
+
+
+Funcion ranking(char src[], int tam, int src2)
+	
+	int ranking[tam], rank<-1;
+	bool state <- true;
+	ranking[0]<-rank;
+	
+	Para i<-1 Hasta tam-1 Con Paso 1
+		Si src[i-1] == src[i] Entonces
+			ranking[i]<-rank;
+		SiNo
+			rank<- rank+1;
+			ranking[i]<-rank;
+		Fin Si
+		Si src2 == src[i-1] and state == true Entonces
+			state<-false;
+			Escribir ranking[i-1];
+		FinSi
+	FinPara
+FinFuncion
+
+
+//metodo de la burbuja
+Funcion sort_array(int src[], int tam)
+	int temp;
+	Para i<-0 Hasta tam Con Paso 1
+		Para j<-0 Hasta tam-1 Con Paso 1
+			Si src[j]<src[j+1] Entonces
+				temp <- src[j];
+				src[j] <- src[j+1];
+				src[j+1] <- temp;
+			Fin Si
+		FinPara
+	FinPara
+FinFuncion
+
+Funcion copy_and_add(int src[], int target[], int tam, int src2)
+	int i;
+	Para i<-0 Hasta tam-1 Con Paso 1
+		target[i] = src[i];
+	FinPara
+	target[i] = src2;
+FinFuncion
