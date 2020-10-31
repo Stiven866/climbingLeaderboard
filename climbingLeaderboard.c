@@ -11,6 +11,7 @@ void copy_and_add(int src[], int taget[], int tam, int src2);
 int main(int argc, char *argv[]){
 	if(argc > 1){
 		if (strcmp("start", argv[1])==0){
+
 			int n,m;
 			
 			scanf("%d\n", &n);
@@ -18,11 +19,12 @@ int main(int argc, char *argv[]){
 			int scores[n];
 			int scoresAux[n+1];
 			char *str = malloc(_DIGITS*n*sizeof(char));
-			
+
 			fgets(str, _DIGITS*n, stdin); 
 			
 			split_to_int(str, " ", scores);
 			free(str);
+
 			scanf("%d\n", &m);
 			int alice[m];
 			str=malloc(_DIGITS*m*sizeof(char));
